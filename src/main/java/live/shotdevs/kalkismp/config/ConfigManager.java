@@ -5,13 +5,11 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
 
 public class ConfigManager {
 
@@ -37,6 +35,17 @@ public class ConfigManager {
     private boolean serverStartEnabled;
     private boolean serverStopEnabled;
     private boolean consoleLoggingEnabled;
+
+    // Status Panel Settings
+    private boolean statusEnabled;
+    private String statusChannelId;
+    private long statusUpdateInterval;
+    private String statusServerIp;
+    private boolean statusShowPlayers;
+    private boolean statusShowTps;
+    private boolean statusShowMspt;
+    private boolean statusShowUptime;
+    private boolean statusShowIp;
 
     // Console Filter Settings
     private long consoleFlushIntervalSeconds;
@@ -97,6 +106,17 @@ public class ConfigManager {
         this.serverStopEnabled = config.getBoolean("features.server-stop", true);
         this.consoleLoggingEnabled = config.getBoolean("features.console-logging", true);
 
+        // Status settings
+        this.statusEnabled = config.getBoolean("status.enabled", true);
+        this.statusChannelId = config.getString("status.channel", "").trim();
+        this.statusUpdateInterval = config.getLong("status.update-interval", 30L);
+        this.statusServerIp = config.getString("status.server-ip", "play.kalkismp.com").trim();
+        this.statusShowPlayers = config.getBoolean("status.show.players", true);
+        this.statusShowTps = config.getBoolean("status.show.tps", true);
+        this.statusShowMspt = config.getBoolean("status.show.mspt", true);
+        this.statusShowUptime = config.getBoolean("status.show.uptime", true);
+        this.statusShowIp = config.getBoolean("status.show.ip", true);
+
         // Console filters
         this.consoleFlushIntervalSeconds = config.getLong("console-filter.flush-interval-seconds", 2L);
         this.consoleMaxBufferLength = config.getInt("console-filter.max-buffer-length", 1800);
@@ -145,9 +165,6 @@ public class ConfigManager {
                 plugin.getLogger().warning("[Config] Discord bot token is missing or default! Set KALKI_DISCORD_TOKEN or config.yml -> discord.token.");
                 this.configValid = false;
             }
-            if (chatChannelId.isBlank() || chatChannelId.equals("CHANNEL_ID")) {
-                plugin.getLogger().info("[Config] Chat channel ID is set to default or empty.");
-            }
         }
     }
 
@@ -166,6 +183,16 @@ public class ConfigManager {
     public boolean isServerStartEnabled() { return serverStartEnabled; }
     public boolean isServerStopEnabled() { return serverStopEnabled; }
     public boolean isConsoleLoggingEnabled() { return consoleLoggingEnabled; }
+
+    public boolean isStatusEnabled() { return statusEnabled; }
+    public String getStatusChannelId() { return statusChannelId; }
+    public long getStatusUpdateInterval() { return statusUpdateInterval; }
+    public String getStatusServerIp() { return statusServerIp; }
+    public boolean isStatusShowPlayers() { return statusShowPlayers; }
+    public boolean isStatusShowTps() { return statusShowTps; }
+    public boolean isStatusShowMspt() { return statusShowMspt; }
+    public boolean isStatusShowUptime() { return statusShowUptime; }
+    public boolean isStatusShowIp() { return statusShowIp; }
 
     public long getConsoleFlushIntervalSeconds() { return consoleFlushIntervalSeconds; }
     public int getConsoleMaxBufferLength() { return consoleMaxBufferLength; }

@@ -58,4 +58,11 @@ public class DiscordListener extends ListenerAdapter {
         // 5. Broadcast safely on Minecraft main server thread
         Bukkit.getScheduler().runTask(plugin, () -> Bukkit.broadcast(component));
     }
+
+    @Override
+    public void onButtonInteraction(net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent event) {
+        if (plugin.getDiscordManager() != null && plugin.getDiscordManager().getButtonHandler() != null) {
+            plugin.getDiscordManager().getButtonHandler().handleButtonInteraction(event);
+        }
+    }
 }

@@ -2,6 +2,8 @@ package live.shotdevs.kalkismp.discord;
 
 import live.shotdevs.kalkismp.KalkiSMP;
 import live.shotdevs.kalkismp.config.ConfigManager;
+import live.shotdevs.kalkismp.status.StatusButtonHandler;
+import live.shotdevs.kalkismp.status.StatusManager;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
@@ -20,10 +22,14 @@ public class DiscordManager {
     private final KalkiSMP plugin;
     private JDA jda;
     private DiscordListener discordListener;
+    private StatusManager statusManager;
+    private StatusButtonHandler buttonHandler;
     private boolean connected = false;
 
     public DiscordManager(KalkiSMP plugin) {
         this.plugin = plugin;
+        this.statusManager = new StatusManager(plugin);
+        this.buttonHandler = new StatusButtonHandler(plugin);
     }
 
     public void startAsync() {
@@ -59,6 +65,11 @@ public class DiscordManager {
                 if (config.isServerStartEnabled()) {
                     sendServerStartNotification();
                 }
+
+                // Start Discord Status Panel updates
+                if (statusManager != null) {
+                    statusManager.start();
+                }
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
                 plugin.getLogger().warning("[Discord] Connection thread interrupted during startup.");
@@ -71,6 +82,10 @@ public class DiscordManager {
     }
 
     public void shutdown() {
+        if (statusManager != null) {
+            statusManager.shutdown();
+        }
+
         if (jda != null) {
             try {
                 plugin.getLogger().info("[Discord] Shutting down Discord bot...");
@@ -91,6 +106,14 @@ public class DiscordManager {
                 this.jda = null;
             }
         }
+    }
+
+    public StatusManager getStatusManager() {
+        return statusManager;
+    }
+
+    public StatusButtonHandler getButtonHandler() {
+        return buttonHandler;
     }
 
     public boolean isConnected() {
