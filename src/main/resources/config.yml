@@ -1,0 +1,42 @@
+# ==================================================
+# Kalki SMP S2 - Custom Integration Config
+# ==================================================
+
+discord:
+  # Enable/disable Discord functionality
+  enabled: true
+
+  # Bot token (Can also be set via KALKI_DISCORD_TOKEN environment variable)
+  token: ""
+
+  # Discord Channel IDs
+  channels:
+    chat: "CHANNEL_ID"
+    events: "CHANNEL_ID"
+    console: "CHANNEL_ID"
+
+features:
+  minecraft-to-discord-chat: true
+  discord-to-minecraft-chat: true
+  join-messages: true
+  leave-messages: true
+  death-messages: true
+  server-start: true
+  server-stop: true
+  console-logging: true
+
+console-filter:
+  # Flush console messages every N seconds
+  flush-interval-seconds: 2
+  # Max character length for a single Discord console message block
+  max-buffer-length: 1800
+  # Filter out specific log levels if desired (e.g. FINE, FINER, FINEST)
+  min-log-level: "INFO"
+  # Phrases to exclude from console forwarding to prevent loops and credential leaks
+  ignored-phrases:
+    - "net.dv8tion.jda"
+    - "live.shotdevs.kalkismp"
+    - "KALKI_DISCORD_TOKEN"
+    - "Bot token"
+    - "password"
+    - "secret"

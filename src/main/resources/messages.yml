@@ -1,0 +1,20 @@
+# ==================================================
+# Kalki SMP S2 - Messages Configuration
+# ==================================================
+
+# Brand header used for Discord event messages & status
+branding: "KALKI SMP S2"
+
+minecraft:
+  discord-chat-format: "&8[&9Discord&8] &b{user}&7: &f{message}"
+  prefix: "&8[&bKalkiSMP&8] "
+  no-permission: "&cYou do not have permission to use this command."
+  reloaded: "&aConfiguration reloaded successfully!"
+
+discord:
+  minecraft-chat-format: "**{player}**: {message}"
+  join-message: "⚔ **{player}** joined the server"
+  leave-message: "👋 **{player}** left the server"
+  death-message: "☠ {death_message}"
+  server-online: "🟢 Server Online"
+  server-offline: "🔴 Server Offline"

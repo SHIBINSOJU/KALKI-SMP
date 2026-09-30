@@ -1,0 +1,17 @@
+name: KalkiSMP
+version: '${project.version}'
+main: live.shotdevs.kalkismp.KalkiSMP
+api-version: '1.21'
+author: shotdevs
+description: Custom Discord and server integration plugin for Kalki SMP S2
+
+commands:
+  kalkismp:
+    description: Main command for KalkiSMP administration and status
+    permission: kalkismp.admin
+    usage: /kalkismp [status|reload]
+
+permissions:
+  kalkismp.admin:
+    description: Allows administration of KalkiSMP
+    default: op
